@@ -71,6 +71,7 @@ dependencies {
     def coroutines_version = "1.7.3"
     def imagepicker_version = "2.1"
     def play_services_base_version = "18.1.0"
+    def paging_version = "3.2.1"
 
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "androidx.core:core-ktx:$core_version"
@@ -105,4 +106,5 @@ dependencies {
     testImplementation "junit:junit:$junit_version"
     androidTestImplementation "androidx.test.ext:junit:$ext_junit_version"
     androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_core_version"
+    implementation "androidx.paging:paging-runtime-ktx:$paging_version"
 }

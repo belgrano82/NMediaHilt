@@ -1,12 +1,14 @@
 package ru.netology.nmedia.application
 
 import android.app.Application
+import dagger.Component
 import dagger.hilt.android.HiltAndroidApp
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import ru.netology.nmedia.auth.AppAuth
 import javax.inject.Inject
+import javax.inject.Singleton
 
 @HiltAndroidApp
 class NMediaApplication : Application() {
@@ -14,6 +16,7 @@ class NMediaApplication : Application() {
 
     @Inject
     lateinit var auth: AppAuth
+
 
     override fun onCreate() {
         super.onCreate()

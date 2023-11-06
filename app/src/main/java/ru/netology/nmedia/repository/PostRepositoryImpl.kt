@@ -1,6 +1,9 @@
 package ru.netology.nmedia.repository
 
 import androidx.lifecycle.*
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
@@ -26,9 +29,14 @@ class PostRepositoryImpl @Inject constructor(
     private val postDao: PostDao,
     private val apiService: ApiService,
 ) : PostRepository {
-    override val data = postDao.getAll()
-        .map(List<PostEntity>::toDto)
-        .flowOn(Dispatchers.Default)
+
+
+    override val data: Flow<PagingData<Post>> = Pager(
+        config = PagingConfig(pageSize = 5, enablePlaceholders = false),
+        pagingSourceFactory = { PostPagingSource(apiService) },
+    ).flow
+
+
 
     override suspend fun getAll() {
         try {
@@ -45,6 +53,7 @@ class PostRepositoryImpl @Inject constructor(
             throw UnknownError
         }
     }
+
 
     override fun getNewerCount(id: Long): Flow<Int> = flow {
         while (true) {
@@ -91,6 +100,8 @@ class PostRepositoryImpl @Inject constructor(
     override suspend fun likeById(id: Long) {
         TODO("Not yet implemented")
     }
+
+
 
     override suspend fun upload(upload: MediaUpload): Media {
         try {
